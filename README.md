@@ -1,134 +1,137 @@
-# Phase 3 Project Guidelines
+#### _*This repo is related to an [article on DEV](https://dev.to/micdavis93/beginners-guide-to-ruby-methods-6h7/edit)_
 
-## Learning Goals
+<hr>
 
-- Build a web basic API with Sinatra and Active Record to support a React
-  frontend
+If you're like me, you've only recently begun your journey into working with back-end coding languages. For you, it might be Python, C#, PHP, or even JavaScript. But for me, it has been Ruby. 
 
-## Introduction
+As a current Flatiron School student, I just finished up Phase 3 of the full-stack software engineering curriculum, which was built around a comprehensive introduction to Ruby. We learned how to:
 
-Congrats on getting through all the material for Phase 3! Now's the time to put
-it all together and build something from scratch to reinforce what you know and
-expand your horizons.
+- Create migrations for back-end data structures
+- Migrate those data structures to create a data table
+- Seed the table's data using class models
+- Create custom methods within those class models, in order to manipulate the data
+- And use Sinatra to handle **CRUD** actions
 
-The focus of this project is **building a Sinatra API backend** that uses
-**Active Record** to access and persist data in a database, which will be used
-by a separate **React frontend** that interacts with the database via the API.
+_Remember that **CRUD** stands for (with corresponding Ruby commands):
+**C**reate - **post**
+**R**ead - **get**
+**U**pdate - **patch**
+**D**elete - **delete**_
 
-## Requirements
+All of these skills are very helpful, both functionally and conceptually, in furthering one's understanding of programming and how to practice it with confidence! I, for one, am pretty excited to now have experience with handling tasks that require these things, **_BUT..._**
 
-For this project, you must:
+## Ruby has a lot of built-in methods 😐
+#### And it can sometimes take a lot of searching to find the right ones to use...
 
-- Use Active Record to interact with a database.
-- Have at least two models with a one-to-many relationship.
-- At a minimum, set up the following API routes in Sinatra:
-  - create and read actions for both models
-  - full CRUD capability for one of the models
-- Build a separate React frontend application that interacts with the API to
-  perform CRUD actions.
-- Implement proper front end state management. You should be updating state using a
-  setState function after receiving your response from a POST, PATCH, or DELETE 
-  request. You should NOT be relying on a GET request to update state. 
-- Use good OO design patterns. You should have separate classes for each of your
-  models, and create instance and class methods as necessary. 
-- Routes in your application (both client side and back end) should follow RESTful
-  conventions.
-- Use your back end optimally. Pass JSON for related associations to the front 
-  end from the back end. You should use active record methods in your controller to grab
-  the needed data from your database and provide as JSON to the front end. You
-  should NOT be relying on filtering front end state or a separate fetch request to
-  retrieve related data.
+If your first exposure to data manipulation was in JavaScript, the transition to doing similar things in Ruby can be a bit overwhelming without a guide to the most essential methods that you might use in the process. Therefore, I decided to create one!
 
-For example, build a todo list application with a React frontend interface and a
-Sinatra backend API, where a user can:
+# So...
 
-- **Create** a new todo
-- **Read** a list of all todos
-- **Update** an individual todo
-- **Delete** a todo
+Custom Ruby methods can target one of two scopes:
 
-A `Todo` can be tagged with a `Category`, so that each todo _belongs to_ a
-category and each category _has many_ todos.
+- **Class Methods**, which affect all instances built from a particular class model
+- **Instance Methods**, which affect only one particular instance of a class model
 
-## Getting Started
+The difference between an instance method and a class method involves the simple addition of a "_self._" to the front of the method name. For example:
 
-### Backend Setup
-
-This repository has all the starter code needed to get a Sinatra backend up and
-running. [**Fork and clone**][fork link] this repository to get started. Then, run
-`bundle install` to install the gems.
-
-**Important**: Be sure you fork a copy of the repo into your GitHub account
-before cloning it. You can do this by using the link above or by clicking the
-"Octocat" button at the top of this page, then clicking "Fork" in the upper
-right corner of the repo page.
-
-[fork link]: https://github.com/learn-co-curriculum/phase-3-sinatra-react-project/fork
-
-The `app/controllers/application_controller.rb` file has an example GET route
-handler. Replace this route with routes for your project.
-
-You can start your server with:
-
-```console
-$ bundle exec rake server
+```
+def self.class_method_name
+   logic_applied_to_array_of_class_instances
+end
+```
+VS.
+```
+def instance_method_name
+   logic_applied_to_instance
+end
 ```
 
-This will run your server on port
-[http://localhost:9292](http://localhost:9292).
+Now that we've distinguished the difference between **Class Methods** and **Instance Methods**, let's take a look at Ruby's...
 
-### Frontend Setup
+# Built-In Methods
 
-Your backend and your frontend should be in **two different repositories**.
+By definition, Ruby's **Built-In Methods** are methods that are already built into the Ruby code, thus allowing the programmer to use them immediately, as elementary tools to build out more complex/specific _custom_ methods.
 
-Create a new repository in a **separate folder** with a React app for your
-frontend. To do this, `cd` out of the backend project directory, and use
-[create-react-app][] to generate the necessary code for your React frontend:
+**Built-in methods** allow us to do simple tasks like filtering lists, sorting items, finding a particular item, and checking/comparing the values of multiple different items. When we are dealing with data sets that have many items (or _instances_) containing a variety of key-value pairs, it is important to have these built-in shorthand methods to quickly accomplish the aforementioned simple tasks.
 
-```console
-$ npx create-react-app my-app-frontend
+### But what _ARE_ these methods? Let's break it down.
+
+To get started, it might help to have some sample data. To accomplish this, I used Active Record to make a table of randomized movie rating data with many movies and many critics. There are three models: **Movie**, **Critic**, and **Review**. Feel free to clone [my example repo](url) and try these methods out for yourself!
+
+_Don't forget to:_
+1. _**bundle install**_
+2. _**rake db:migrate db:seed**_
+3. _use a table explorer like SQLite to verify your database was populated_
+4. _**rake console** when you want to test out your methods_
+
+Once you've done steps 1-3 above, you should be looking at three simple tables similar to this:
+
+**Movies**
+![Image description](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/r19oqno6uz1zrvfu3bqe.png)
+
+**Critics**
+![Image description](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/2a61xin29v3srygqpx48.png)
+
+**Reviews**
+![Image description](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/qr5ucxo9ui7dsfgu75of.png)
+
+Alright, that's enough setup. Now that we have data to manipulate, we can try out our methods!
+
+### array.map
+Let's say we want to take our critics and add a last name to all of them, using the ever-useful [Faker gem](https://github.com/faker-ruby/faker). The method definition is going to look like this:
 ```
-
-After creating the project locally, you should also
-[create a repository on GitHub][create repo] to host your repo and help
-collaborate, if you're working with a partner.
-
-### Fetch Example
-
-Your React app should make fetch requests to your Sinatra backend! Here's an
-example:
-
-```js
-fetch("http://localhost:9292/test")
-  .then((r) => r.json())
-  .then((data) => console.log(data));
+  def self.add_last_name
+    full_names = self.all.map{|critic|
+      critic.update(name: "#{critic.name} #{Faker::Name.last_name}")
+    }
+  end
 ```
+Here, we are using _self._ at the beginning of this method name, because this is a **Class Method**, intended to affect all instances of a particular class. You can certainly use _.map_ on smaller arrays of instances, too but our goal here was to use all the instances in this class. So, this map is stepping (iterating) through the array of instances and applying the change to each and every one. We can test out this method in our console by typing _rake console_ in our terminal (step 4 from above), and then entering this code:
+```
+Critic.add_last_name
+```
+This should return a bunch of lines and successfully update our database so that all the critics have last names now. Refresh your database viewer to make sure the updates went through!
 
-## Project Tips
+### array.filter
+Let's switch over to the reviews table now. If we want to know all the ratings of only a particular movie, we can _.filter_ all our reviews by the _movie_id_ key. Here's what that method definition might look like:
+```
+  def self.filter_by_movie(movie_id)
+    self.all.filter{|review| review.movie_id == movie_id}
+  end
+```
+Again, we are using _self._ upfront because we are filtering down from all instances of this **Review** class. This filter is stepping through and checking each review instance's value for _movie_id_ and checking it against the one passed in as an argument when the method is called, removing if this returns false. We test by entering _rake console_ again and typing:
+```
+Review.filter_by_movie(1)
+```
+...and this should return a new array of review instances that have a _movie_id_ of 1!
 
-- This project is intended to focus more on the backend than the frontend, so
-  try and keep the React side of things relatively simple. Focus on working with
-  Active Record and performing CRUD actions. What are some interesting queries you can write? What kinds of questions can you ask of your data?
-- Once you have a project idea, come up with a domain model and decide what
-  relationships exist between the models in your application. Use a tool like
-  [dbdiagram.io][] to help visualize your models.
-- Decide on your API endpoints. What data should they return? What kind of CRUD
-  action should they perform? What data do they need from the client?
-- Use [Postman][postman download] to test your endpoints.
-- Use `binding.pry` to debug your requests on the server. It's very helpful to use a
-  `binding.pry` in your controller within a route to see what `params` are being
-  sent.
-- Use the [Network Tab in the Dev Tools][network tab] in the frontend to debug
-  your requests.
+### .order
+What if we wanted to sort all the reviews by rating? For that, we use _.order_, and with it we have a couple options. If we're using  integers, it will order numerically from lowest to highest (ascending) by default. In the method, we must specify the key we wish to order the instances by, which will of course by our _rating_. Let's check it out:
+```
+  def self.order_by_rating
+    self.all.order(:rating)
+  end
+```
+Yet again, we are appending _self._ to the front of the method name to specify that we are looking to sort all instances of this **Review** class. And we passed in _:rating_ in symbol format to follow the syntax rules for the _.order_. Open up your _rake console_ again and test with this code:
+```
+Review.order_by_rating
+```
+This should return a new array with the same number of reviews, but they will be ordered from lowest rated to highest rated! If you wish to order the reviews descending instead, simply replace the content inside the parentheses with _rating: :desc_!
 
-## Resources
+### I have run out of time to finish this article now, but I will be returning to talk about these methods as well:
 
-- [create-react-app][]
-- [dbdiagram.io][]
-- [Postman][postman download]
+#### .max_by / .min_by
 
-[create-react-app]: https://create-react-app.dev/docs/getting-started
-[create repo]: https://docs.github.com/en/get-started/quickstart/create-a-repo
-[dbdiagram.io]: https://dbdiagram.io/
-[postman download]: https://www.postman.com/downloads/
-[network tab]: https://developer.chrome.com/docs/devtools/network/
+#### .sum
+
+#### .count
+
+#### .create
+
+#### .find / .find_by
+
+#### .istrue? / .isfalse?
+
+#### .destroy
+
+# Thanks for reading, and happy coding!
